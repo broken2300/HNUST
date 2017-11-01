@@ -1,0 +1,111 @@
+<script type="text/javascript">
+	$(function(){
+		var $provincesContainer = $("#provinces");
+		var $citiesContainer = $('#cities');
+		var $stationTable = $('#stations');
+		globalPCMSs = "";
+		var currentProvince = 0;
+		var currentCity = 0;
+		var endGroup = '</div>';
+		var endButton = '</button>';
+		var group = '<div class="btn-group-vertical" role="group" aria-label="...">';
+		var provinceButton = '<button type="button" class="btn btn-link  btn-xs">';
+
+		var stationTH = '<tr>'+
+							'<th class="active">站点</th>'+
+							'<th class="success">PM2.5</th>'+
+							'<th class="warning">PM10</th>'+
+							'<th class="danger">...</th>'+
+							'<th class="info">...</th>'+
+						'</tr>';
+
+
+	// init
+		$.getJSON("json/PCMSs.json",function(PCMSs){ 
+			//alert(PCMSs.provinces[1].name);
+			globalPCMSs = PCMSs;
+			update($provincesContainer,globalPCMSs,'provinces');
+		});
+		
+
+		function update($container,datalist,buttonType){
+			var contentHTML = '';
+			var count = 0;
+			var generalButton = provinceButton;
+
+			$.each(datalist,function(n,value){
+
+				if(n % 5 == 0){
+        			contentHTML += group;
+        		}
+        		contentHTML += generalButton;
+        		contentHTML += value.name;
+        		contentHTML += endButton;
+
+        		if((n + 1) % 5 == 0){
+        			contentHTML += endGroup;
+        		}
+        		count = n;
+        	});
+
+        	if((count + 1) % 5 != 0)
+        		contentHTML += endGroup;
+        	$container.html(contentHTML);
+
+        	
+        		$container.find("button").click(function(){
+        			var index = $($container.find("button")).index($(this));
+        			if(buttonType == 'provinces'){    //  點擊省份事件
+        				var provinceName = $(this).html();
+        				currentProvince = index;
+
+        				// 更新網頁
+        				update($citiesContainer,globalPCMSs[currentProvince].cities,'cities');
+
+        				// 更新地圖等操作
+        				;
+
+        			}else if(buttonType == 'cities'){   //  點擊城市事件
+        				var cityName = $(this).html();
+        				
+        				currentCity = index;
+        				// 更新網頁
+        				var stationHTML = stationTH;
+
+        				$.each(globalPCMSs[currentProvince].cities[currentCity].stations,function(n,station){
+        					
+
+                                                //  此處添加數據，暫為‘-’
+        					stationHTML += '<tr>';
+        					stationHTML += '<td class="active">'+station.name+'</td>';
+        					stationHTML += '<td class="success">'+'-'+'</td>';
+        					stationHTML += '<td class="warning">'+'-'+'</td>';
+        					stationHTML += '<td class="danger">'+'-'+'</td>';
+        					stationHTML += '<td class="info">'+'-'+'</td>';
+        					stationHTML += '</tr>';
+        				});
+
+        				$stationTable.html(stationHTML);
+        			//	update($citiesContainer,globalPCMSs[currentProvince].cities[currentCity].stations,'stations');
+        			}
+        			
+        		});
+		}
+		
+	});
+
+	</script>
+
+
+
+
+
+        <div class="panel-heading">省份选择</div>
+        <div id="provinces" class="panel-body">
+
+        <div class="panel-heading">城市选择</div>
+        <div id="cities" class="panel-body">
+
+        <div class="panel-heading">实时数据</div>
+        <div class="panel-body table-scroll-y">
+        <table id="stations" class="table table-condensed table-hover">

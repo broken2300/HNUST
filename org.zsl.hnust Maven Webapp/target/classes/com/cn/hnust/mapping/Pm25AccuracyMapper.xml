@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.Pm25AccuracyMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Pm25Accuracy" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="observed" property="observed" jdbcType="DOUBLE" />
+    <result column="forecasted" property="forecasted" jdbcType="DOUBLE" />
+    <result column="accuracy_rate" property="accuracyRate" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, city, time, observed, forecasted, accuracy_rate
+  </sql>
+  <select id="selectByDateAndCity" resultMap="BaseResultMap">
+   select  
+   <include refid="Base_Column_List" />
+    from pm25_accuracy_rate_of_nlr
+    where time = #{0} and city=#{1}
+</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm25_accuracy_rate_of_nlr
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pm25_accuracy_rate_of_nlr
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.hnust.pojo.Pm25Accuracy" >
+    insert into pm25_accuracy_rate_of_nlr (id, city, time, observed, 
+      forecasted, accuracy_rate)
+    values (#{id,jdbcType=BIGINT}, #{city,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, #{observed,jdbcType=DOUBLE}, 
+      #{forecasted,jdbcType=DOUBLE}, #{accuracyRate,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Pm25Accuracy" >
+    insert into pm25_accuracy_rate_of_nlr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="observed != null" >
+        observed,
+      </if>
+      <if test="forecasted != null" >
+        forecasted,
+      </if>
+      <if test="accuracyRate != null" >
+        accuracy_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="observed != null" >
+        #{observed,jdbcType=DOUBLE},
+      </if>
+      <if test="forecasted != null" >
+        #{forecasted,jdbcType=DOUBLE},
+      </if>
+      <if test="accuracyRate != null" >
+        #{accuracyRate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Pm25Accuracy" >
+    update pm25_accuracy_rate_of_nlr
+    <set >
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="observed != null" >
+        observed = #{observed,jdbcType=DOUBLE},
+      </if>
+      <if test="forecasted != null" >
+        forecasted = #{forecasted,jdbcType=DOUBLE},
+      </if>
+      <if test="accuracyRate != null" >
+        accuracy_rate = #{accuracyRate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.hnust.pojo.Pm25Accuracy" >
+    update pm25_accuracy_rate_of_nlr
+    set city = #{city,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      observed = #{observed,jdbcType=DOUBLE},
+      forecasted = #{forecasted,jdbcType=DOUBLE},
+      accuracy_rate = #{accuracyRate,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

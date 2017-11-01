@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.DailyWeatherMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.DailyWeather" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="Tmax" property="tmax" jdbcType="DOUBLE" />
+    <result column="ws" property="ws" jdbcType="DOUBLE" />
+    <result column="Tdew" property="tdew" jdbcType="DOUBLE" />
+    <result column="rh" property="rh" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, city, time, Tmax, ws, Tdew, rh
+  </sql>
+<select id="selectByDateAndCity" resultMap="BaseResultMap">
+   select  
+   <include refid="Base_Column_List" />
+    from daily_weather
+    where time = #{0} and city=#{1}
+</select>
+<select id="selectAllByDateAndCity" resultMap="BaseResultMap">
+   select  
+   <include refid="Base_Column_List" />
+    from daily_weather
+where time BETWEEN #{0} and ADDDATE(#{0},#{1}) and city=#{2}
+</select>
+
+  <select id="selectAllByDate" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from daily_weather
+    where date = #{0}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from daily_weather
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from daily_weather
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.hnust.pojo.DailyWeather" >
+    insert into daily_weather (id, city, time, Tmax, 
+      ws, Tdew, rh)
+    values (#{id,jdbcType=BIGINT}, #{city,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, #{tmax,jdbcType=DOUBLE}, 
+      #{ws,jdbcType=DOUBLE}, #{tdew,jdbcType=DOUBLE}, #{rh,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.DailyWeather" >
+    insert into daily_weather
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="tmax != null" >
+        Tmax,
+      </if>
+      <if test="ws != null" >
+        ws,
+      </if>
+      <if test="tdew != null" >
+        Tdew,
+      </if>
+      <if test="rh != null" >
+        rh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="tmax != null" >
+        #{tmax,jdbcType=DOUBLE},
+      </if>
+      <if test="ws != null" >
+        #{ws,jdbcType=DOUBLE},
+      </if>
+      <if test="tdew != null" >
+        #{tdew,jdbcType=DOUBLE},
+      </if>
+      <if test="rh != null" >
+        #{rh,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.DailyWeather" >
+    update daily_weather
+    <set >
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="tmax != null" >
+        Tmax = #{tmax,jdbcType=DOUBLE},
+      </if>
+      <if test="ws != null" >
+        ws = #{ws,jdbcType=DOUBLE},
+      </if>
+      <if test="tdew != null" >
+        Tdew = #{tdew,jdbcType=DOUBLE},
+      </if>
+      <if test="rh != null" >
+        rh = #{rh,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.hnust.pojo.DailyWeather" >
+    update daily_weather
+    set city = #{city,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      Tmax = #{tmax,jdbcType=DOUBLE},
+      ws = #{ws,jdbcType=DOUBLE},
+      Tdew = #{tdew,jdbcType=DOUBLE},
+      rh = #{rh,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

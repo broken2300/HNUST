@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.HourlyWeatherMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.HourlyWeather" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="station" property="station" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="temperature" property="temperature" jdbcType="DOUBLE" />
+    <result column="ws" property="ws" jdbcType="DOUBLE" />
+    <result column="rh" property="rh" jdbcType="DOUBLE" />
+    <result column="Tdew" property="tdew" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, station, time, temperature, ws, rh, Tdew
+  </sql>
+  <select id="selectByDateAndCity" resultMap="BaseResultMap">
+   select  
+   <include refid="Base_Column_List" />
+    from 3hourly_weather
+    where time = #{0} and city=#{1}
+</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from 3hourly_weather
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from 3hourly_weather
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.hnust.pojo.HourlyWeather" >
+    insert into 3hourly_weather (id, station, time, 
+      temperature, ws, rh, Tdew
+      )
+    values (#{id,jdbcType=BIGINT}, #{station,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{temperature,jdbcType=DOUBLE}, #{ws,jdbcType=DOUBLE}, #{rh,jdbcType=DOUBLE}, #{tdew,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.HourlyWeather" >
+    insert into 3hourly_weather
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="station != null" >
+        station,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="ws != null" >
+        ws,
+      </if>
+      <if test="rh != null" >
+        rh,
+      </if>
+      <if test="tdew != null" >
+        Tdew,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="station != null" >
+        #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="ws != null" >
+        #{ws,jdbcType=DOUBLE},
+      </if>
+      <if test="rh != null" >
+        #{rh,jdbcType=DOUBLE},
+      </if>
+      <if test="tdew != null" >
+        #{tdew,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.HourlyWeather" >
+    update 3hourly_weather
+    <set >
+      <if test="station != null" >
+        station = #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="ws != null" >
+        ws = #{ws,jdbcType=DOUBLE},
+      </if>
+      <if test="rh != null" >
+        rh = #{rh,jdbcType=DOUBLE},
+      </if>
+      <if test="tdew != null" >
+        Tdew = #{tdew,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.hnust.pojo.HourlyWeather" >
+    update 3hourly_weather
+    set station = #{station,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      temperature = #{temperature,jdbcType=DOUBLE},
+      ws = #{ws,jdbcType=DOUBLE},
+      rh = #{rh,jdbcType=DOUBLE},
+      Tdew = #{tdew,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

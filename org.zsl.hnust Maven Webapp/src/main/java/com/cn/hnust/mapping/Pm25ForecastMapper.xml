@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.Pm25ForecastMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Pm25Forecast" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="one" property="one" jdbcType="DOUBLE" />
+    <result column="two" property="two" jdbcType="DOUBLE" />
+    <result column="three" property="three" jdbcType="DOUBLE" />
+    <result column="four" property="four" jdbcType="DOUBLE" />
+    <result column="five" property="five" jdbcType="DOUBLE" />
+    <result column="six" property="six" jdbcType="DOUBLE" />
+    <result column="seven" property="seven" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, city, time, one, two, three, four, five, six, seven
+  </sql>
+  <select id="selectByDateAndCity" resultMap="BaseResultMap">
+   select  
+   <include refid="Base_Column_List" />
+    from pm2_5_forecast_result_nlr
+    where time = #{0} and city=#{1}
+</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pm2_5_forecast_result_nlr
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pm2_5_forecast_result_nlr
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cn.hnust.pojo.Pm25Forecast" >
+    insert into pm2_5_forecast_result_nlr (id, city, time, one, 
+      two, three, four, five, 
+      six, seven)
+    values (#{id,jdbcType=BIGINT}, #{city,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, #{one,jdbcType=DOUBLE}, 
+      #{two,jdbcType=DOUBLE}, #{three,jdbcType=DOUBLE}, #{four,jdbcType=DOUBLE}, #{five,jdbcType=DOUBLE}, 
+      #{six,jdbcType=DOUBLE}, #{seven,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Pm25Forecast" >
+    insert into pm2_5_forecast_result_nlr
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="one != null" >
+        one,
+      </if>
+      <if test="two != null" >
+        two,
+      </if>
+      <if test="three != null" >
+        three,
+      </if>
+      <if test="four != null" >
+        four,
+      </if>
+      <if test="five != null" >
+        five,
+      </if>
+      <if test="six != null" >
+        six,
+      </if>
+      <if test="seven != null" >
+        seven,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="one != null" >
+        #{one,jdbcType=DOUBLE},
+      </if>
+      <if test="two != null" >
+        #{two,jdbcType=DOUBLE},
+      </if>
+      <if test="three != null" >
+        #{three,jdbcType=DOUBLE},
+      </if>
+      <if test="four != null" >
+        #{four,jdbcType=DOUBLE},
+      </if>
+      <if test="five != null" >
+        #{five,jdbcType=DOUBLE},
+      </if>
+      <if test="six != null" >
+        #{six,jdbcType=DOUBLE},
+      </if>
+      <if test="seven != null" >
+        #{seven,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Pm25Forecast" >
+    update pm2_5_forecast_result_nlr
+    <set >
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="one != null" >
+        one = #{one,jdbcType=DOUBLE},
+      </if>
+      <if test="two != null" >
+        two = #{two,jdbcType=DOUBLE},
+      </if>
+      <if test="three != null" >
+        three = #{three,jdbcType=DOUBLE},
+      </if>
+      <if test="four != null" >
+        four = #{four,jdbcType=DOUBLE},
+      </if>
+      <if test="five != null" >
+        five = #{five,jdbcType=DOUBLE},
+      </if>
+      <if test="six != null" >
+        six = #{six,jdbcType=DOUBLE},
+      </if>
+      <if test="seven != null" >
+        seven = #{seven,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.hnust.pojo.Pm25Forecast" >
+    update pm2_5_forecast_result_nlr
+    set city = #{city,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      one = #{one,jdbcType=DOUBLE},
+      two = #{two,jdbcType=DOUBLE},
+      three = #{three,jdbcType=DOUBLE},
+      four = #{four,jdbcType=DOUBLE},
+      five = #{five,jdbcType=DOUBLE},
+      six = #{six,jdbcType=DOUBLE},
+      seven = #{seven,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
